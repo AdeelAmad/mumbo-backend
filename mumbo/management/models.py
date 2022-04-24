@@ -2,7 +2,7 @@ from django.db import models
 
 # Create your models here.
 class Guild(models.Model):
-    id = models.BigIntegerField(primary_key=True)
+    id = models.CharField(max_length=20, primary_key=True)
     counting = models.BooleanField(default=False)
     voicechannel = models.BooleanField(default=False)
     leveling = models.BooleanField(default=False)

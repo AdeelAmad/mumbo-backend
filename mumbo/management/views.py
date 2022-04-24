@@ -23,7 +23,7 @@ def index(request):
                 "voicechannel": g.voicechannel,
                 "leveling": g.leveling,
                 "afkmusic": g.afkmusic,
-                "aert": g.alert
+                "alert": g.alert
             }
 
             return JsonResponse(data=response, status=200)
@@ -54,7 +54,6 @@ def index(request):
     # PATCH to update data
     elif request.method == "PUT":
         body = json.loads(request.body)
-
         if Guild.objects.filter(id=body['id']):
             g = Guild.objects.get(id=body['id'])
             g.counting = body['counting']
@@ -69,7 +68,7 @@ def index(request):
                 "voicechannel": g.voicechannel,
                 "leveling": g.leveling,
                 "afkmusic": g.afkmusic,
-                "aert": g.alert
+                "alert": g.alert
             }
             return JsonResponse(data=response, status=200)
         else:

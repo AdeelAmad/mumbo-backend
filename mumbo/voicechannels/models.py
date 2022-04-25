@@ -9,7 +9,7 @@ class voicechannelsetting(models.Model):
     guild_id = models.ForeignKey(Guild, on_delete=models.PROTECT)
     channel_id = models.TextField(max_length=18, default="")
     category = models.TextField(max_length=18, default="")
-    bitrate = models.IntegerField()
+    bitrate = models.IntegerField(default=64)
 
 class channel(models.Model):
     guild = models.ForeignKey(voicechannelsetting, on_delete=models.PROTECT)

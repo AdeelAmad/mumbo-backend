@@ -33,6 +33,7 @@ ALLOWED_HOSTS = ['mumbobot.xyz', 'api.mumbobot.xyz', '66.94.113.9', '127.0.0.1']
 INSTALLED_APPS = [
     'management.apps.ManagementConfig',
     'counting.apps.CountingConfig',
+    'voicechannels.apps.VoicechannelsConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',

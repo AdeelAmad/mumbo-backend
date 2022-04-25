@@ -22,7 +22,7 @@ def index(request):
             response = {
                 "guild_id": int(v.guild_id.id),
                 "channel_id": int(v.channel_id),
-                "category": int(v.category),
+                "category": v.category,
                 "bitrate": v.bitrate
             }
 
@@ -122,9 +122,8 @@ def pain(request):
 
     elif request.method == "PUT":
         body = json.loads(request.body)
-        if channel.objects.filter(channel_id=body['id']):
-            c = channel.objects.get(channel_id=body['id'])
-            c.channel_id = body['channel_id']
+        if channel.objects.filter(channel_id=body['channel_id']):
+            c = channel.objects.get(channel_id=body['channel_id'])
             c.owner = body['owner']
             c.save()
 

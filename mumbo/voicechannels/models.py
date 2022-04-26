@@ -7,8 +7,8 @@ from management.models import Guild
 # Create your models here.
 class voicechannelsetting(models.Model):
     guild_id = models.ForeignKey(Guild, on_delete=models.PROTECT)
-    channel_id = models.TextField(max_length=18, default="")
-    category = models.TextField(max_length=18, default="")
+    channel_id = models.TextField(max_length=18, default="0")
+    category = models.TextField(max_length=18, default="0")
     bitrate = models.IntegerField(default=64)
 
 class channel(models.Model):

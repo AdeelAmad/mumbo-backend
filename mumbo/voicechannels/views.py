@@ -116,6 +116,17 @@ def pain(request):
                 }
 
                 return JsonResponse(data=response, status=200)
+            elif channel.objects.filter(owner=body['id']):
+                v = channel.objects.get(owner=body['id'])
+
+                response = {
+                    "guild": v.guild.guild_id.id,
+                    "channel_id": v.channel_id,
+                    "owner": v.owner
+                }
+
+                return JsonResponse(data=response, status=200)
+
             # Return 404 if object not exist
             return HttpResponse(status=404)
 

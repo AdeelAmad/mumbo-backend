@@ -1,5 +1,6 @@
 import base64
 import json
+from django.shortcuts import redirect
 
 from django.core import serializers
 from django.http import HttpResponse, JsonResponse
@@ -20,9 +21,8 @@ def index(request):
         password = decoded_credentials[1]
         print(username, password)
     except:
-        return HttpResponse(status=403)
+        return redirect('https://mumbobot.xyz')
     if username == "bot" and password == "%a_938xZeT_VcY8J7uN7GGHnw4auuvVQ":
-
         # GET to retrieve data
         if request.method == "GET":
             # Check if Count object exists for guild
@@ -71,4 +71,4 @@ def index(request):
         else:
             return HttpResponse(status=405)
     else:
-        return HttpResponse(status=403)
+        return redirect('https://mumbobot.xyz')

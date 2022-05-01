@@ -1,0 +1,261 @@
+{% extends "frontend/base.html" %}
+{% block content %}
+<title>MumboBot - Commands</title>
+
+<!-- Bootstrap JS | JQuery -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+        crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns"
+        crossorigin="anonymous"></script>
+
+<style>.bg-discord {
+    background-color: #ef6562;
+}
+
+.bg-dark {
+    background-color: #343A40;
+}
+
+.navbar {
+    padding: 20px;
+}
+
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@900&display=swap');
+.navbar-brand {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 30px;
+}
+
+.container-1 {
+    margin-bottom: 50px;
+}
+
+.bg-grey {
+    background-color: #23272a;
+}
+
+.card {
+    border-width: 0px;
+    border-radius: 25px;
+    color: #ffffff;
+    margin-bottom: 20px
+}
+
+.brand-line {
+    font-family: 'Montserrat', sans-serif;
+    margin-top: 40px;
+    margin-bottom: 40px;
+    margin-left: 15px;
+    color: #ffffff;
+}
+
+.title-line {
+    font-family: 'Montserrat', sans-serif;
+    padding-top: 25px;
+    color: #ffffff;
+    margin-left: 40px;
+}
+
+.card-img-top {
+    padding: 0px;
+    border-radius: 12px;
+    margin-bottom: 10px;
+}
+
+.btn-discord {
+    color: #ffffff;
+    background-color: #ef6562;
+    border-color: #ef6562;
+}
+
+.btn-discord:hover {
+    color: #ffffff;
+    background-color: #7289DA;
+    border-color: #7289DA;
+}
+
+.big-text {
+    font-size: 36px;
+}
+
+.card-text {
+    font-size: 16px;
+}
+
+input {
+    margin: 25px;
+    border-color: #ef6562;
+    border-width: 5px;
+    color: #ef6562;
+}
+
+.form-control {
+    border-color: #ef6562;
+    border-width: 2px;
+    border-radius: 25px;
+    color: #ef6562;
+    margin-left: 40px;
+    margin-right: 40px;
+}
+
+.form-control:active {
+    border-color: #ef6562;
+    border-width: 3px;
+    border-radius: 25px;
+    color: #ef6562;
+}
+
+.list-group {
+    list-style: none;
+    background-color: #23272a;
+}
+
+.list-group-item {
+    list-style: none;
+    background-color: #343A40;
+    border-width: 0px;
+}
+
+.date {
+    font-size: 12px;
+}</style>
+
+<div class="container bg-dark rounded">
+    <div class="row">
+        <h1 class="title-line"><b>Commands:</b></h1>
+        <!-- These are dummy commands | They don't actually work on Spectre if you choose to install it -->
+    </div>
+    <div class="row">
+        <input class="form-control" id="myInput" type="text" placeholder="Search Commands...">
+    </div>
+    <!-- Update these with your bot's Commands -->
+    <ul class="list-group" id="CommandList">
+        <li class="list-group-item">
+            <div class="row">
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                    <div class="card bg-grey" style="width:100%">
+                        <div class="card-body">
+                            <!-- Command -->
+                            <h4 class="card-title big-text">/controls</h4>
+                            <!-- Command Description -->
+                            <p class="card-text">Access the controls for a voice channel</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </li>
+        <li class="list-group-item">
+            <div class="row">
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                    <div class="card bg-grey" style="width:100%">
+                        <div class="card-body">
+                            <!-- Command -->
+                            <h4 class="card-title big-text">/setcountingchannel</h4>
+                            <!-- Command Description -->
+                            <p class="card-text">Sets the channel for the bot to monitor for counting</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </li>
+        <li class="list-group-item">
+            <div class="row">
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                    <div class="card bg-grey" style="width:100%">
+                        <div class="card-body">
+                            <!-- Command -->
+                            <h4 class="card-title big-text">/setcreatebitrate</h4>
+                            <!-- Command Description -->
+                            <p class="card-text">Sets the bitrate for voice channels to be created with</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </li>
+        <li class="list-group-item">
+            <div class="row">
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                    <div class="card bg-grey" style="width:100%">
+                        <div class="card-body">
+                            <!-- Command -->
+                            <h4 class="card-title big-text">/setcreatecategory</h4>
+                            <!-- Command Description -->
+                            <p class="card-text">Sets the category for voice channels to be created in</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </li>
+        <li class="list-group-item">
+            <div class="row">
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                    <div class="card bg-grey" style="width:100%">
+                        <div class="card-body">
+                            <!-- Command -->
+                            <h4 class="card-title big-text">/setcreatechannel</h4>
+                            <!-- Command Description -->
+                            <p class="card-text">Sets the channel for the bot to monitor for voice channel creation</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </li>
+        <li class="list-group-item">
+            <div class="row">
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                    <div class="card bg-grey" style="width:100%">
+                        <div class="card-body">
+                            <!-- Command -->
+                            <h4 class="card-title big-text">/setcurrentcount</h4>
+                            <!-- Command Description -->
+                            <p class="card-text">Sets the current count of the counting channel</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </li>
+        <li class="list-group-item">
+            <div class="row">
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                    <div class="card bg-grey" style="width:100%">
+                        <div class="card-body">
+                            <!-- Command -->
+                            <h4 class="card-title big-text">/settings</h4>
+                            <!-- Command Description -->
+                            <p class="card-text">Change bot settings for the server</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </li>
+        <li class="list-group-item">
+            <div class="row">
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                    <div class="card bg-grey" style="width:100%">
+                        <div class="card-body">
+                            <!-- Command -->
+                            <h4 class="card-title big-text">/stats</h4>
+                            <!-- Command Description -->
+                            <p class="card-text">Bot stats and uptime</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </li>
+    </ul>
+</div>
+
+<script>
+    $(document).ready(function () {
+        $("#myInput").on("keyup", function () {
+            var value = $(this).val().toLowerCase();
+            $("#CommandList li").filter(function () {
+                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+            });
+        });
+    });
+</script>
+
+{% endblock content %}

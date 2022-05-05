@@ -19,7 +19,6 @@ def index(request):
         decoded_credentials = base64.b64decode(encoded_credentials).decode("utf-8").split(':')
         username = decoded_credentials[0]
         password = decoded_credentials[1]
-        print(username, password)
     except:
         return redirect('https://mumbobot.xyz')
     if username == "bot" and password == "%a_938xZeT_VcY8J7uN7GGHnw4auuvVQ":
@@ -95,7 +94,6 @@ def pain(request):
         decoded_credentials = base64.b64decode(encoded_credentials).decode("utf-8").split(':')
         username = decoded_credentials[0]
         password = decoded_credentials[1]
-        print(username, password)
     except:
         return redirect('https://mumbobot.xyz')
     if username == "bot" and password == "%a_938xZeT_VcY8J7uN7GGHnw4auuvVQ":

@@ -19,7 +19,6 @@ def index(request):
         decoded_credentials = base64.b64decode(encoded_credentials).decode("utf-8").split(':')
         username = decoded_credentials[0]
         password = decoded_credentials[1]
-        print(username, password)
     except:
         return redirect('https://mumbobot.xyz')
 
@@ -48,7 +47,6 @@ def index(request):
         # Post to create guild object if 404 returned from GET method or on server join
         elif request.method == "POST":
             body = json.loads(request.body)
-            print(body)
             # If guild object exists
             if Guild.objects.filter(id=body['id']):
                 # would create conflict to have two guild objects
@@ -62,6 +60,7 @@ def index(request):
                 # Create all sub objects
                 guild.count_set.create()
                 guild.voicechannelsetting_set.create()
+                guild.levelingsetting_set.create()
 
                 return HttpResponse(status=200)
 

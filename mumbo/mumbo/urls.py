@@ -21,5 +21,6 @@ urlpatterns = [
     path('management/', include('management.urls')),
     path('counting/', include('counting.urls')),
     path('voicechannels/', include('voicechannels.urls')),
+    path('leveling/', include('leveling.urls')),
     path('admin/', admin.site.urls),
 ]

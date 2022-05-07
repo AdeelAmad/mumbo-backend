@@ -6,9 +6,32 @@ from django.http import HttpResponse, JsonResponse
 from django.shortcuts import redirect
 from django.views.decorators.csrf import csrf_exempt
 from .models import Guild
+import mysql.connector
 import sys
-sys.path.append('../mumbo')
 
+sys.path.append('../mumbo')
+from counting.models import Count
+from leveling.models import levelingsetting, userlevel, rankreward
+from voicechannels.models import voicechannelsetting
+
+def init_db():
+    return mysql.connector.connect(
+        user="u2_Ru8Tw52hz5",
+        password="bLyEEg!Mw^!GOOAzyUXMb^XZ",
+        host="66.94.113.9",
+        port=10002,
+        database="s2_Data"
+    )
+
+def get_cursor(conn):
+    try:
+        conn.ping(reconnect=True, attempts=3, delay=5)
+    except mysql.connector.Error as err:
+        # reconnect your cursor as you did in __init__ or wherever
+        conn = init_db()
+    return conn.cursor(buffered=True)
+
+conn = init_db()
 
 @csrf_exempt
 def index(request):
@@ -88,6 +111,119 @@ def index(request):
             else:
                 # Return 404 if object not exist
                 return HttpResponse(status=404)
+        else:
+            return HttpResponse(status=405)
+    else:
+        return redirect('https://mumbobot.xyz')
+
+def migrate(request):
+    try:
+        auth_header = request.META['HTTP_AUTHORIZATION']
+        encoded_credentials = auth_header.split(' ')[1]  # Removes "Basic " to isolate credentials
+        decoded_credentials = base64.b64decode(encoded_credentials).decode("utf-8").split(':')
+        username = decoded_credentials[0]
+        password = decoded_credentials[1]
+    except:
+        return redirect('https://mumbobot.xyz')
+
+    if username == "bot" and password == "%a_938xZeT_VcY8J7uN7GGHnw4auuvVQ":
+        # GET to retrieve data
+        if request.method == "GET":
+            body = json.loads(request.body)
+            guildobject = Guild.objects.get(id=body['id'])
+            if guildobject.migrated == False:
+            # Check if guild object exists for guild
+                if len(str(body['id'])) == 18:
+                    countobject = Count.objects.get(guild_id=body['id'])
+                    levelingobject = levelingsetting.objects.get(guild_id=body['id'])
+                    voiceobject = voicechannelsetting.objects.get(guild_id=body['id'])
+
+                    results = {}
+                    users = {}
+
+                    cur = get_cursor(conn)
+                    cur.execute("SELECT guildID, prefix, createchannel, category, countchannel, currentcount, lastcounter, setlevelupchannel FROM GuildSettings WHERE guildId={}".format(body['id']))
+                    for g in cur:
+                        results['1'] = {
+                            "createchannel": g[2],
+                            "createcategory": g[3],
+                            "countingchannel": g[4],
+                            "currentcount": g[5],
+                            "lastcounter": g[6],
+                            "levelupchannel": g[7]
+                        }
+
+
+                    cur.execute("SELECT guildID, fun, core, counting, leveling, usertrackingpriot, alertsent FROM GuildModules WHERE guildId={}".format(body['id']))
+                    for g in cur:
+                        results['2'] = {
+                            "fun": g[1],
+                            "core": g[2],
+                            "counting": g[3],
+                            "leveling": g[4]
+                        }
+
+                    cur.execute("SELECT guildID, guild, user, xp, xpboost, lastsenttime FROM UserData WHERE guild={}".format(body['id']))
+                    for u in cur:
+                        levelingobject.userlevel_set.create(user_id=u[2], xp=u[3])
+
+                    if results:
+                        guild = {
+                            "id": str(body['id']),
+                            "counting": results['2']['counting'] == 1,
+                            "voicechannel": results['2']['core'] == 1,
+                            "leveling": results['2']['leveling'] == 1,
+                            "afkmusic": results['2']['fun'] == 1,
+                        }
+
+                        lvlsetting = {
+                            "id": str(body['id']),
+                            "levelupchannel": results['1']['levelupchannel']
+                        }
+
+                        vcsettings = {
+                            "id": str(body['id']),
+                            "channel_id": results['1']['createchannel'],
+                            "category": results['1']['createcategory'],
+                        }
+
+                        scount = {
+                            "id": str(body['id']),
+                            "channel": results['1']['countingchannel'],
+                            "last_count": results['1']['currentcount'],
+                            "last_counter": results['1']['lastcounter']
+                        }
+
+                        guildobject.counting = guild['counting']
+                        guildobject.voicechannel = guild['voicechannel']
+                        guildobject.leveling = guild['leveling']
+                        guildobject.afkmusic = guild['afkmusic']
+                        guildobject.save()
+
+                        countobject.channel = scount['channel']
+                        countobject.last_count = scount['last_count']
+                        countobject.last_counter = scount['last_counter']
+                        countobject.save()
+
+                        levelingobject.levelupchannel = lvlsetting['levelupchannel']
+                        levelingobject.save()
+
+                        voiceobject.channel_id = vcsettings['channel_id']
+                        voiceobject.category = vcsettings['category']
+                        voiceobject.save()
+
+                        finaldata = {
+                            "guild": guild,
+                            "leveling": lvlsetting,
+                            "voicechannels": vcsettings,
+                            "counting": scount
+                        }
+
+                        return JsonResponse(data=finaldata, status=200)
+                    else:
+                        return HttpResponse(status=404)
+            # Return 404 if object not exist
+            return HttpResponse(status=404)
         else:
             return HttpResponse(status=405)
     else:

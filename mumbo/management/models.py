@@ -8,3 +8,4 @@ class Guild(models.Model):
     leveling = models.BooleanField(default=False)
     afkmusic = models.BooleanField(default=False)
     alert = models.BooleanField(default=True)
+    migrated = models.BooleanField(default=False)

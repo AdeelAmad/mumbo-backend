@@ -147,3 +147,31 @@ def pain(request):
             return HttpResponse(status=405)
     else:
         return redirect('https://mumbobot.xyz')
+
+def leaderboard(request):
+    try:
+        auth_header = request.META['HTTP_AUTHORIZATION']
+        encoded_credentials = auth_header.split(' ')[1]  # Removes "Basic " to isolate credentials
+        decoded_credentials = base64.b64decode(encoded_credentials).decode("utf-8").split(':')
+        username = decoded_credentials[0]
+        password = decoded_credentials[1]
+    except:
+        return redirect('https://mumbobot.xyz')
+    if username == "bot" and password == "%a_938xZeT_VcY8J7uN7GGHnw4auuvVQ":
+        # GET to retrieve data
+        if request.method == "GET":
+            body = json.loads(request.body)
+            setting = levelingsetting.objects.get(guild_id=body['id'])
+
+            responsedict = {}
+
+            response = userlevel.objects.filter(guild=setting).order_by("-xp")[:10]
+
+            for r in response:
+                responsedict[r.user_id] = r.xp
+
+            return JsonResponse(data=responsedict, status=200)
+        else:
+            return HttpResponse(status=405)
+    else:
+        return redirect('https://mumbobot.xyz')

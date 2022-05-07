@@ -8,4 +8,5 @@ urlpatterns = [
     path('privacy/', views.privacy, name='privacy'),
     path('tos/', views.tos, name='tos'),
     path('changelog/', views.changelog, name='changelog'),
+    path('migration/', views.migration, name='migration'),
 ]

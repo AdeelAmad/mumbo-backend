@@ -17,3 +17,8 @@ class userlevel(models.Model):
     user_id = models.TextField(max_length=18)
     xp = models.BigIntegerField(default=0)
     last_message = models.DateTimeField(auto_now=True)
+
+class rankreward(models.Model):
+    guild = models.ForeignKey(levelingsetting, on_delete=models.PROTECT)
+    role_id = models.TextField(max_length=18)
+    level = models.IntegerField()

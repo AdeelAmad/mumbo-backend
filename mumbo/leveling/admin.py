@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import levelingsetting, userlevel
+from .models import levelingsetting, userlevel, rankreward
 
 # Register your models here.
 class levelingsettingadmin(admin.ModelAdmin):
@@ -11,5 +11,10 @@ class useradmin(admin.ModelAdmin):
     list_display = ('guild', 'user_id', 'xp', 'last_message')
     search_fields = ['guild__guild_id__id']
 
+class rankrewardadmin(admin.ModelAdmin):
+    list_display = ('guild', 'role_id', 'level')
+    search_fields = ['guild__guild_id__id']
+
 admin.site.register(levelingsetting, levelingsettingadmin)
 admin.site.register(userlevel, useradmin)
+admin.site.register(rankreward, rankrewardadmin)

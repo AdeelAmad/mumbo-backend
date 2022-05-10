@@ -198,6 +198,7 @@ def migrate(request):
                         guildobject.voicechannel = guild['voicechannel']
                         guildobject.leveling = guild['leveling']
                         guildobject.afkmusic = guild['afkmusic']
+                        guildobject.migrated = True
                         guildobject.save()
 
                         countobject.channel = scount['channel']
@@ -221,6 +222,8 @@ def migrate(request):
 
                         return JsonResponse(data=finaldata, status=200)
                     else:
+                        guildobject.migrated = True
+                        guildobject.save()
                         return HttpResponse(status=404)
             # Return 404 if object not exist
             return HttpResponse(status=404)

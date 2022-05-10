@@ -9,4 +9,5 @@ urlpatterns = [
     path('tos/', views.tos, name='tos'),
     path('changelog/', views.changelog, name='changelog'),
     path('migration/', views.migration, name='migration'),
+    path('invite/', views.invite, name='invite'),
 ]

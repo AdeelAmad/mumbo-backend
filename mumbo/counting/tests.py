@@ -20,3 +20,8 @@ class CountTestCase(TestCase):
         request = self.factory.get('/counting/')
         value = index(request)
         self.assertEqual(value.status_code, 302)
+
+    def test_get_count_incorrect_auth(self):
+        request = self.factory.get('/counting/')
+        value = index(request)
+        self.assertEqual(value.status_code, 302)

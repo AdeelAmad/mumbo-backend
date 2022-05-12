@@ -27,6 +27,6 @@ jobs:
         python -m pip install --upgrade pip
         pip install -r requirements.txt
     - name: Run Tests
-      working-directory: ./mumbo/mumbo
+      working-directory: ./mumbo/
       run: |
         python manage.py test

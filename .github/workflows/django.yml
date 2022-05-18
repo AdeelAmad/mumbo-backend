@@ -25,3 +25,4 @@ jobs:
       working-directory: ./mumbo/
       run: |
         python manage.py test
+        

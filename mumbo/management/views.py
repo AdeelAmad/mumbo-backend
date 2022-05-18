@@ -26,7 +26,7 @@ def init_db():
 def get_cursor(conn):
     try:
         conn.ping(reconnect=True, attempts=3, delay=5)
-    except mysql.connector.Error as err:
+    except:
         # reconnect your cursor as you did in __init__ or wherever
         conn = init_db()
     return conn.cursor(buffered=True)
@@ -48,69 +48,79 @@ def index(request):
     if username == "bot" and password == "%a_938xZeT_VcY8J7uN7GGHnw4auuvVQ":
         # GET to retrieve data
         if request.method == "GET":
-            body = json.loads(request.body)
-            # Check if guild object exists for guild
-            if Guild.objects.filter(id=body['id']):
-                g = Guild.objects.get(id=body['id'])
+            try:
+                body = json.loads(request.body)
+                # Check if guild object exists for guild
+                if Guild.objects.filter(id=body['id']):
+                    g = Guild.objects.get(id=body['id'])
 
-                response = {
-                    "id": g.id,
-                    "counting": g.counting,
-                    "voicechannel": g.voicechannel,
-                    "leveling": g.leveling,
-                    "afkmusic": g.afkmusic,
-                    "alert": g.alert
-                }
+                    response = {
+                        "id": g.id,
+                        "counting": g.counting,
+                        "voicechannel": g.voicechannel,
+                        "leveling": g.leveling,
+                        "afkmusic": g.afkmusic,
+                        "alert": g.alert
+                    }
 
-                return JsonResponse(data=response, status=200)
-            # Return 404 if object not exist
-            return HttpResponse(status=404)
+                    return JsonResponse(data=response, status=200)
+                # Return 404 if object not exist
+                return HttpResponse(status=404)
+            except:
+                return HttpResponse(status=400)
 
 
         # Post to create guild object if 404 returned from GET method or on server join
         elif request.method == "POST":
-            body = json.loads(request.body)
-            # If guild object exists
-            if Guild.objects.filter(id=body['id']):
-                # would create conflict to have two guild objects
-                return HttpResponse(status=409)
-            else:
-                # Create the guild object
-                guild = Guild(id=body['id'])
-                # Save the guild object
-                guild.save()
+            try:
+                # If guild object exists
+                body = json.loads(request.body)
 
-                # Create all sub objects
-                guild.count_set.create()
-                guild.voicechannelsetting_set.create()
-                guild.levelingsetting_set.create()
+                if Guild.objects.filter(id=body['id']):
+                    # would create conflict to have two guild objects
+                    return HttpResponse(status=409)
+                else:
+                    # Create the guild object
+                    guild = Guild(id=body['id'])
+                    # Save the guild object
+                    guild.save()
 
-                return HttpResponse(status=200)
+                    # Create all sub objects
+                    guild.count_set.create()
+                    guild.voicechannelsetting_set.create()
+                    guild.levelingsetting_set.create()
+
+                    return HttpResponse(status=200)
+            except:
+                return HttpResponse(status=400)
 
 
         # PATCH to update data
         elif request.method == "PUT":
-            body = json.loads(request.body)
-            if Guild.objects.filter(id=body['id']):
-                g = Guild.objects.get(id=body['id'])
-                g.counting = body['counting']
-                g.voicechannel = body['voicechannel']
-                g.leveling = body['leveling']
-                g.afkmusic = body['afkmusic']
-                g.alert = body['alert']
-                g.save()
-                response = {
-                    "id": g.id,
-                    "counting": g.counting,
-                    "voicechannel": g.voicechannel,
-                    "leveling": g.leveling,
-                    "afkmusic": g.afkmusic,
-                    "alert": g.alert
-                }
-                return JsonResponse(data=response, status=200)
-            else:
-                # Return 404 if object not exist
-                return HttpResponse(status=404)
+            try:
+                body = json.loads(request.body)
+                if Guild.objects.filter(id=body['id']):
+                    g = Guild.objects.get(id=body['id'])
+                    g.counting = body['counting']
+                    g.voicechannel = body['voicechannel']
+                    g.leveling = body['leveling']
+                    g.afkmusic = body['afkmusic']
+                    g.alert = body['alert']
+                    g.save()
+                    response = {
+                        "id": g.id,
+                        "counting": g.counting,
+                        "voicechannel": g.voicechannel,
+                        "leveling": g.leveling,
+                        "afkmusic": g.afkmusic,
+                        "alert": g.alert
+                    }
+                    return JsonResponse(data=response, status=200)
+                else:
+                    # Return 404 if object not exist
+                    return HttpResponse(status=404)
+            except:
+                return HttpResponse(status=400)
         else:
             return HttpResponse(status=405)
     else:
@@ -129,104 +139,108 @@ def migrate(request):
     if username == "bot" and password == "%a_938xZeT_VcY8J7uN7GGHnw4auuvVQ":
         # GET to retrieve data
         if request.method == "GET":
-            body = json.loads(request.body)
-            guildobject = Guild.objects.get(id=body['id'])
-            if guildobject.migrated == False:
-            # Check if guild object exists for guild
-                if len(str(body['id'])) == 18:
-                    countobject = Count.objects.get(guild_id=body['id'])
-                    levelingobject = levelingsetting.objects.get(guild_id=body['id'])
-                    voiceobject = voicechannelsetting.objects.get(guild_id=body['id'])
+            try:
+                body = json.loads(request.body)
+                guildobject = Guild.objects.get(id=body['id'])
+                if guildobject.migrated == False:
+                # Check if guild object exists for guild
+                    if len(str(body['id'])) == 18:
+                        countobject = Count.objects.get(guild_id=body['id'])
+                        levelingobject = levelingsetting.objects.get(guild_id=body['id'])
+                        voiceobject = voicechannelsetting.objects.get(guild_id=body['id'])
 
-                    results = {}
-                    users = {}
+                        results = {}
+                        users = {}
 
-                    cur = get_cursor(conn)
-                    cur.execute("SELECT guildID, prefix, createchannel, category, countchannel, currentcount, lastcounter, setlevelupchannel FROM GuildSettings WHERE guildId={}".format(body['id']))
-                    for g in cur:
-                        results['1'] = {
-                            "createchannel": g[2],
-                            "createcategory": g[3],
-                            "countingchannel": g[4],
-                            "currentcount": g[5],
-                            "lastcounter": g[6],
-                            "levelupchannel": g[7]
-                        }
+                        cur = get_cursor(conn)
+                        cur.execute("SELECT guildID, prefix, createchannel, category, countchannel, currentcount, lastcounter, setlevelupchannel FROM GuildSettings WHERE guildId={}".format(body['id']))
+                        for g in cur:
+                            results['1'] = {
+                                "createchannel": g[2],
+                                "createcategory": g[3],
+                                "countingchannel": g[4],
+                                "currentcount": g[5],
+                                "lastcounter": g[6],
+                                "levelupchannel": g[7]
+                            }
 
 
-                    cur.execute("SELECT guildID, fun, core, counting, leveling, usertrackingpriot, alertsent FROM GuildModules WHERE guildId={}".format(body['id']))
-                    for g in cur:
-                        results['2'] = {
-                            "fun": g[1],
-                            "core": g[2],
-                            "counting": g[3],
-                            "leveling": g[4]
-                        }
+                        cur.execute("SELECT guildID, fun, core, counting, leveling, usertrackingpriot, alertsent FROM GuildModules WHERE guildId={}".format(body['id']))
+                        for g in cur:
+                            results['2'] = {
+                                "fun": g[1],
+                                "core": g[2],
+                                "counting": g[3],
+                                "leveling": g[4]
+                            }
 
-                    cur.execute("SELECT guildID, guild, user, xp, xpboost, lastsenttime FROM UserData WHERE guild={}".format(body['id']))
-                    for u in cur:
-                        levelingobject.userlevel_set.create(user_id=u[2], xp=u[3])
+                        cur.execute("SELECT guildID, guild, user, xp, xpboost, lastsenttime FROM UserData WHERE guild={}".format(body['id']))
+                        for u in cur:
+                            levelingobject.userlevel_set.create(user_id=u[2], xp=u[3])
 
-                    if results:
-                        guild = {
-                            "id": str(body['id']),
-                            "counting": results['2']['counting'] == 1,
-                            "voicechannel": results['2']['core'] == 1,
-                            "leveling": results['2']['leveling'] == 1,
-                            "afkmusic": results['2']['fun'] == 1,
-                        }
+                        if results:
+                            guild = {
+                                "id": str(body['id']),
+                                "counting": results['2']['counting'] == 1,
+                                "voicechannel": results['2']['core'] == 1,
+                                "leveling": results['2']['leveling'] == 1,
+                                "afkmusic": results['2']['fun'] == 1,
+                            }
 
-                        lvlsetting = {
-                            "id": str(body['id']),
-                            "levelupchannel": results['1']['levelupchannel']
-                        }
+                            lvlsetting = {
+                                "id": str(body['id']),
+                                "levelupchannel": results['1']['levelupchannel']
+                            }
 
-                        vcsettings = {
-                            "id": str(body['id']),
-                            "channel_id": results['1']['createchannel'],
-                            "category": results['1']['createcategory'],
-                        }
+                            vcsettings = {
+                                "id": str(body['id']),
+                                "channel_id": results['1']['createchannel'],
+                                "category": results['1']['createcategory'],
+                            }
 
-                        scount = {
-                            "id": str(body['id']),
-                            "channel": results['1']['countingchannel'],
-                            "last_count": results['1']['currentcount'],
-                            "last_counter": results['1']['lastcounter']
-                        }
+                            scount = {
+                                "id": str(body['id']),
+                                "channel": results['1']['countingchannel'],
+                                "last_count": results['1']['currentcount'],
+                                "last_counter": results['1']['lastcounter']
+                            }
 
-                        guildobject.counting = guild['counting']
-                        guildobject.voicechannel = guild['voicechannel']
-                        guildobject.leveling = guild['leveling']
-                        guildobject.afkmusic = guild['afkmusic']
-                        guildobject.migrated = True
-                        guildobject.save()
+                            guildobject.counting = guild['counting']
+                            guildobject.voicechannel = guild['voicechannel']
+                            guildobject.leveling = guild['leveling']
+                            guildobject.afkmusic = guild['afkmusic']
+                            guildobject.migrated = True
+                            guildobject.save()
 
-                        countobject.channel = scount['channel']
-                        countobject.last_count = scount['last_count']
-                        countobject.last_counter = scount['last_counter']
-                        countobject.save()
+                            countobject.channel = scount['channel']
+                            countobject.last_count = scount['last_count']
+                            countobject.last_counter = scount['last_counter']
+                            countobject.save()
 
-                        levelingobject.levelupchannel = lvlsetting['levelupchannel']
-                        levelingobject.save()
+                            levelingobject.levelupchannel = lvlsetting['levelupchannel']
+                            levelingobject.save()
 
-                        voiceobject.channel_id = vcsettings['channel_id']
-                        voiceobject.category = vcsettings['category']
-                        voiceobject.save()
+                            voiceobject.channel_id = vcsettings['channel_id']
+                            voiceobject.category = vcsettings['category']
+                            voiceobject.save()
 
-                        finaldata = {
-                            "guild": guild,
-                            "leveling": lvlsetting,
-                            "voicechannels": vcsettings,
-                            "counting": scount
-                        }
+                            finaldata = {
+                                "guild": guild,
+                                "leveling": lvlsetting,
+                                "voicechannels": vcsettings,
+                                "counting": scount
+                            }
 
-                        return JsonResponse(data=finaldata, status=200)
-                    else:
-                        guildobject.migrated = True
-                        guildobject.save()
-                        return HttpResponse(status=404)
-            # Return 404 if object not exist
-            return HttpResponse(status=404)
+                            return JsonResponse(data=finaldata, status=200)
+                        else:
+                            guildobject.migrated = True
+                            guildobject.save()
+                            return HttpResponse(status=406)
+                # Return 404 if object not exist
+                return HttpResponse(status=404)
+            except Exception as e:
+                print(e)
+                return HttpResponse(status=400)
         else:
             return HttpResponse(status=405)
     else:

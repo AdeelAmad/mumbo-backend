@@ -131,6 +131,9 @@ class MigrateTestCase(TestCase):
         self.username = "bot"
         self.password = "%a_938xZeT_VcY8J7uN7GGHnw4auuvVQ"
 
+        self.credentials = f"{self.username}:{self.password}"
+        self.base64_credentials = base64.b64encode(self.credentials.encode('utf8')).decode('utf8')
+
 
 
     def test_get_migrate_no_auth(self):
@@ -144,37 +147,27 @@ class MigrateTestCase(TestCase):
         self.assertEqual(response.status_code, 302)
 
     def test_bad_method_migrate_correct_auth(self):
-        credentials = f"{self.username}:{self.password}"
-        base64_credentials = base64.b64encode(credentials.encode('utf8')).decode('utf8')
-        response = self.client.patch('/management/migrate/', HTTP_AUTHORIZATION=f"Basic {base64_credentials}")
+        response = self.client.patch('/management/migrate/', HTTP_AUTHORIZATION=f"Basic {self.base64_credentials}")
         self.assertEqual(response.status_code, 405)
 
     def test_get_migrate_correct_auth_noid(self):
-        credentials = f"{self.username}:{self.password}"
-        base64_credentials = base64.b64encode(credentials.encode('utf8')).decode('utf8')
-        response = self.client.get('/management/migrate/', HTTP_AUTHORIZATION=f"Basic {base64_credentials}")
+        response = self.client.get('/management/migrate/', HTTP_AUTHORIZATION=f"Basic {self.base64_credentials}")
         self.assertEqual(response.status_code, 400)
 
     def test_get_migrate_correct_auth_badid(self):
-        credentials = f"{self.username}:{self.password}"
-        base64_credentials = base64.b64encode(credentials.encode('utf8')).decode('utf8')
-        response = self.client.generic('GET', '/management/migrate/', json.dumps({"id": 123456789012345679}), HTTP_AUTHORIZATION=f"Basic {base64_credentials}")
+        response = self.client.generic('GET', '/management/migrate/', json.dumps({"id": 123456789012345679}), HTTP_AUTHORIZATION=f"Basic {self.base64_credentials}")
         self.assertEqual(response.status_code, 400)
 
     def test_get_migrate_correct_auth_goodid_migrated(self):
-        credentials = f"{self.username}:{self.password}"
-        base64_credentials = base64.b64encode(credentials.encode('utf8')).decode('utf8')
-        response = self.client.generic('GET', '/management/migrate/', json.dumps({"id": 123456789012345678}), HTTP_AUTHORIZATION=f"Basic {base64_credentials}")
+        response = self.client.generic('GET', '/management/migrate/', json.dumps({"id": 123456789012345678}), HTTP_AUTHORIZATION=f"Basic {self.base64_credentials}")
         self.assertEqual(response.status_code, 404)
 
     def test_get_migrate_correct_auth_goodid_no_old_data(self):
-        credentials = f"{self.username}:{self.password}"
-        base64_credentials = base64.b64encode(credentials.encode('utf8')).decode('utf8')
-        response = self.client.generic('GET', '/management/migrate/', json.dumps({"id": 123456789012345677}), HTTP_AUTHORIZATION=f"Basic {base64_credentials}")
+
+        response = self.client.generic('GET', '/management/migrate/', json.dumps({"id": 123456789012345677}), HTTP_AUTHORIZATION=f"Basic {self.base64_credentials}")
         self.assertEqual(response.status_code, 406)
 
     def test_get_migrate_correct_auth_goodid(self):
-        credentials = f"{self.username}:{self.password}"
-        base64_credentials = base64.b64encode(credentials.encode('utf8')).decode('utf8')
-        response = self.client.generic('GET', '/management/migrate/', json.dumps({"id": 734506404093624470}), HTTP_AUTHORIZATION=f"Basic {base64_credentials}")
+        response = self.client.generic('GET', '/management/migrate/', json.dumps({"id": 734506404093624470}), HTTP_AUTHORIZATION=f"Basic {self.base64_credentials}")
         self.assertEqual(response.status_code, 200)
+

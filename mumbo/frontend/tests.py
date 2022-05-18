@@ -10,7 +10,7 @@ from django.test import Client
 
 
 # Create your tests here.
-class CountTestCase(TestCase):
+class FrontEndTestCase(TestCase):
     def setUp(self):
         pass
 

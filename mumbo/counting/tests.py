@@ -32,7 +32,7 @@ class CountTestCase(TestCase):
         response = self.client.patch('/counting/', HTTP_AUTHORIZATION=f"Basic {base64_credentials}")
         self.assertEqual(response.status_code, 302)
 
-    def test_bad_method_count_correct_auth_bad_method(self):
+    def test_bad_method_count_correct_auth(self):
         credentials = f"{self.username}:{self.password}"
         base64_credentials = base64.b64encode(credentials.encode('utf8')).decode('utf8')
         response = self.client.patch('/counting/', HTTP_AUTHORIZATION=f"Basic {base64_credentials}")

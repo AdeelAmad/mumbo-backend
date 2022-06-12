@@ -38,6 +38,10 @@ class FrontEndTestCase(TestCase):
         response = self.client.get('/tos/', HTTP_HOST="api.mumbobot.xyz")
         self.assertEqual(response.status_code, 302)
 
+    def test_start_badhost(self):
+        response = self.client.get('/getting-started/', HTTP_HOST="api.mumbobot.xyz")
+        self.assertEqual(response.status_code, 302)
+
     def test_home(self):
         response = self.client.get('/', HTTP_HOST="mumbobot.xyz")
         self.assertEqual(response.status_code, 200)
@@ -65,3 +69,7 @@ class FrontEndTestCase(TestCase):
     def test_invite(self):
         response = self.client.get('/invite/')
         self.assertEqual(response.status_code, 302)
+
+    def test_start(self):
+        response = self.client.get('/getting-started/', HTTP_HOST="mumbobot.xyz")
+        self.assertEqual(response.status_code, 200)

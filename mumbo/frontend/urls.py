@@ -10,4 +10,5 @@ urlpatterns = [
     path('changelog/', views.changelog, name='changelog'),
     path('migration/', views.migration, name='migration'),
     path('invite/', views.invite, name='invite'),
+    path('getting-started/', views.start, name='start'),
 ]

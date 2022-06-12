@@ -25,62 +25,71 @@ def index(request):
 
         # GET to retrieve data
         if request.method == "GET":
-            body = json.loads(request.body)
-            # Check if guild object exists for guild
-            if voicechannelsetting.objects.filter(guild_id=body['id']):
+            try:
+                body = json.loads(request.body)
+                # Check if guild object exists for guild
+                if voicechannelsetting.objects.filter(guild_id=body['id']):
 
-                v = voicechannelsetting.objects.get(guild_id=body['id'])
+                    v = voicechannelsetting.objects.get(guild_id=body['id'])
 
-                response = {
-                    "guild_id": int(v.guild_id.id),
-                    "channel_id": int(v.channel_id),
-                    "category": v.category,
-                    "bitrate": v.bitrate
-                }
+                    response = {
+                        "guild_id": int(v.guild_id.id),
+                        "channel_id": int(v.channel_id),
+                        "category": v.category,
+                        "bitrate": v.bitrate
+                    }
 
-                return JsonResponse(data=response, status=200)
-            # Return 404 if object not exist
-            return HttpResponse(status=404)
+                    return JsonResponse(data=response, status=200)
+                # Return 404 if object not exist
+                return HttpResponse(status=404)
+            except:
+                return HttpResponse(status=400)
 
 
         # Post to create guild object if 404 returned from GET method or on server join
         elif request.method == "POST":
-            body = json.loads(request.body)
-            # If guild object exists
-            if voicechannelsetting.objects.filter(guild_id=body['id']):
-                # would create conflict to have two guild objects
-                return HttpResponse(status=409)
-            else:
-                # Get the Guild object
-                guild = Guild.objects.get(pk=body['id'])
+            try:
+                body = json.loads(request.body)
+                # If guild object exists
+                if voicechannelsetting.objects.filter(guild_id=body['id']):
+                    # would create conflict to have two guild objects
+                    return HttpResponse(status=409)
+                else:
+                    # Get the Guild object
+                    guild = Guild.objects.get(pk=body['id'])
 
-                # Create voicechannelsetting object w/ guild foreign key
-                guild.voicechannelsetting_set.create()
+                    # Create voicechannelsetting object w/ guild foreign key
+                    guild.voicechannelsetting_set.create()
 
-                return HttpResponse(status=200)
+                    return HttpResponse(status=200)
+            except:
+                return HttpResponse(status=400)
 
 
         # PATCH to update data
         elif request.method == "PUT":
-            body = json.loads(request.body)
-            if voicechannelsetting.objects.filter(guild_id=body['id']):
-                v = voicechannelsetting.objects.get(guild_id=body['id'])
-                v.channel_id = body['channel_id']
-                v.category = body['category']
-                v.bitrate = body['bitrate']
-                v.save()
+            try:
+                body = json.loads(request.body)
+                if voicechannelsetting.objects.filter(guild_id=body['id']):
+                    v = voicechannelsetting.objects.get(guild_id=body['id'])
+                    v.channel_id = body['channel_id']
+                    v.category = body['category']
+                    v.bitrate = body['bitrate']
+                    v.save()
 
-                response = {
-                    "guild_id": int(v.guild_id.id),
-                    "channel_id": v.channel_id,
-                    "category": v.category,
-                    "bitrate": v.bitrate
-                }
+                    response = {
+                        "guild_id": int(v.guild_id.id),
+                        "channel_id": v.channel_id,
+                        "category": v.category,
+                        "bitrate": v.bitrate
+                    }
 
-                return JsonResponse(data=response, status=200)
-            else:
-                # Return 404 if object not exist
-                return HttpResponse(status=404)
+                    return JsonResponse(data=response, status=200)
+                else:
+                    # Return 404 if object not exist
+                    return HttpResponse(status=404)
+            except:
+                return HttpResponse(status=400)
         else:
             return HttpResponse(status=405)
     else:
@@ -101,33 +110,37 @@ def pain(request):
 
         # GET to retrieve data
         if request.method == "GET":
-            body = json.loads(request.body)
+            try:
+                body = json.loads(request.body)
 
-            # Check if guild object exists for guild
-            if channel.objects.filter(channel_id=body['id']):
+                # Check if guild object exists for guild
+                if channel.objects.filter(channel_id=body['id']):
 
-                v = channel.objects.get(channel_id=body['id'])
+                    v = channel.objects.get(channel_id=body['id'])
 
-                response = {
-                    "guild": v.guild.guild_id.id,
-                    "channel_id": v.channel_id,
-                    "owner": v.owner
-                }
+                    response = {
+                        "guild": v.guild.guild_id.id,
+                        "channel_id": v.channel_id,
+                        "owner": v.owner
+                    }
 
-                return JsonResponse(data=response, status=200)
-            elif channel.objects.filter(owner=body['id']):
-                v = channel.objects.get(owner=body['id'])
+                    return JsonResponse(data=response, status=200)
+                elif channel.objects.filter(owner=body['id']):
+                    v = channel.objects.get(owner=body['id'])
 
-                response = {
-                    "guild": v.guild.guild_id.id,
-                    "channel_id": v.channel_id,
-                    "owner": v.owner
-                }
+                    response = {
+                        "guild": v.guild.guild_id.id,
+                        "channel_id": v.channel_id,
+                        "owner": v.owner
+                    }
 
-                return JsonResponse(data=response, status=200)
+                    return JsonResponse(data=response, status=200)
+                # Return 404 if object not exist
+                return HttpResponse(status=404)
+            except:
+                return HttpResponse(status=400)
 
-            # Return 404 if object not exist
-            return HttpResponse(status=404)
+
 
         # Post to create guild object if 404 returned from GET method or on server join
         elif request.method == "POST":

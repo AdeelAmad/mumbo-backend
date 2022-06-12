@@ -46,5 +46,11 @@ def migration(request):
     else:
         return redirect('https://mumbobot.xyz')
 
+def start(request):
+    if request.META['HTTP_HOST'] == "mumbobot.xyz":
+        return render(request, "frontend/start.html")
+    else:
+        return redirect('https://mumbobot.xyz')
+
 def invite(request):
     return redirect("https://discord.com/api/oauth2/authorize?client_id=744992005158862939&permissions=8&scope=bot%20applications.commands")

@@ -5,8 +5,10 @@ from django.shortcuts import redirect
 from django.core import serializers
 from django.http import HttpResponse, JsonResponse
 from django.views.decorators.csrf import csrf_exempt
-from .models import levelingsetting, userlevel, rankreward
+from .models import levelingsetting, userlevel, rankreward, xpeditevent
 import sys
+from sentry_sdk import capture_message
+
 sys.path.append('../mumbo')
 
 from management.models import Guild
@@ -124,11 +126,15 @@ def pain(request):
 
         # PATCH to update data
         elif request.method == "PUT":
+
+            # logger for edits
+
             body = json.loads(request.body)
             setting = levelingsetting.objects.get(guild_id=body['guild_id'])
 
             if userlevel.objects.filter(user_id=body['id'], guild=setting):
                 u = userlevel.objects.get(user_id=body['id'], guild=setting)
+                old_xp = u.xp
                 u.xp = body['xp']
                 u.save()
 
@@ -138,6 +144,8 @@ def pain(request):
                     "xp": u.xp,
                     "last_message": u.last_message
                 }
+
+                capture_message("data: {} old data: {}".format(response, old_xp))
 
                 return JsonResponse(data=response, status=200)
             else:

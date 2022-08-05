@@ -1,5 +1,30 @@
 {% extends "frontend/base.html" %}
 {% block content %}
-<title>MumboBot - Getting Started</title>
-<p>Apologies. This page is under development. To view a full list of commands you can go to <a href="{% url 'commands' %}">https://mumbobot.xyz/commands</a>.</p>
+    <title>MumboBot - Getting Started</title>
+    <h1>Getting Started With Mumbo Bot</h1>
+    <h3><i>*Note: All these modules need to be enabled using <strong>/settings</strong> before you can use them.</i></h3>
+    <br>
+    <h2>Temporary Voice Channels</h2>
+    <h3>You will need: <br>-Administrator</h3>
+    <p>To set up temporary voice channels, you will need to set the <b>create channel</b> and the <b>create category.</b></p>
+    <p>Run the <b>/setcreatechannel</b> command to set a voice channel to the create channel</p>
+    <p>Run the <b>/setcreatecategory</b> command to set a category for temporary voice channels to be made in.</p>
+    <p>Finally, you can set the bitrate you want the channel to be made in by running <b>/setcreatebitrate</b></p>
+    <br>
+    <p>If a user wants to lock or unlock their channel, they can run <b>/controls</b> to be given buttons with which they can do that.</p>
+
+    <h2>Counting</h2>
+    <h3>You will need: <br>-Administrator</h3>
+    <p>The counting module will make it so that only numbers in the correct order can be sent in a channel. It will also make sure that the same person cannot go two times in a row.</p>
+    <p>To set the counting channel, use <b>/setcountingchannel</b></p>
+    <p>While the count will start from 0 by default, you can manually set it using <b>/setcurrentcount</b></p>
+
+    <h2>AFK Music</h2>
+    <h3>You will need: <br>-Administrator</h3>
+    <p><i>***NOTE: This module will be removed from the bot soon.</i></p>
+    <p>This module will work automatically as long as there is a server set AFK channel.</p>
+
+    <h2>Leveling</h2>
+    <h3>You will need: <br>-Administrator</h3>
+    <p>This module currently has multiple known bugs. If you would still like to use it, you can contact me on discord at leep#4160, and I will be happy to assist you in setting it up</p>
 {% endblock content %}

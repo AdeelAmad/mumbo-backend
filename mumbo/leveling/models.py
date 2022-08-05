@@ -22,3 +22,10 @@ class rankreward(models.Model):
     guild = models.ForeignKey(levelingsetting, on_delete=models.PROTECT)
     role_id = models.TextField(max_length=18)
     level = models.IntegerField()
+
+class xpeditevent(models.Model):
+    guild = models.ForeignKey(levelingsetting, on_delete=models.PROTECT)
+    user_id = models.TextField(max_length=18)
+    before_xp = models.BigIntegerField(default=0)
+    after_xp = models.BigIntegerField(default=0)
+    timestamp = models.DateTimeField(auto_now=True)

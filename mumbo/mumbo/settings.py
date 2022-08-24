@@ -51,6 +51,7 @@ INSTALLED_APPS = [
     'voicechannels.apps.VoicechannelsConfig',
     'frontend.apps.FrontendConfig',
     'leveling.apps.LevelingConfig',
+    'users.apps.UsersConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',

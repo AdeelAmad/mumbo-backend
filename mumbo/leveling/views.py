@@ -145,7 +145,7 @@ def pain(request):
                     "last_message": u.last_message
                 }
 
-                capture_message("data: {} old data: {}".format(response, old_xp))
+                capture_message("User: {} Old XP: {} Awarded XP: {} New XP: {}".format(u.user_id, old_xp, body['xp']-old_xp, u.xp))
 
                 return JsonResponse(data=response, status=200)
             else:

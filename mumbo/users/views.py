@@ -1,5 +1,6 @@
 import base64
 import json
+import datetime
 
 from django.http import HttpResponse, JsonResponse
 from django.shortcuts import render, redirect
@@ -34,11 +35,32 @@ def index(request):
                     }
                     return JsonResponse(data=response, status=200)
                 else:
-                    return HttpResponse(status=404)
+
+                    responsedict = {}
+
+                    response = discorduser.objects.all().order_by("month", "day")
+
+                    for r in response:
+                        d = datetime.datetime.now()
+                        month = int(d.strftime("%m").lstrip('0'))
+                        date = int(d.strftime("%d").lstrip('0'))
+
+
+                        if r.month > month-1:
+                            if r.month == month:
+                                if date < r.day:
+                                    responsedict[r.user_id] = r.month, r.day
+                            else:
+                                responsedict[r.user_id] = r.month, r.day
+
+                    return JsonResponse(responsedict, status=200)
+
+
                 # INPUT: USER ID
                 # OUTPUT: MONTH + DAY
                 #return the month and day for user
-            except:
+            except Exception as e:
+                print(e)
                 return HttpResponse(status=400)
 
         # Post to create count object if 404 returned from GET method or on server join

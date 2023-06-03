@@ -6,48 +6,48 @@ from django.shortcuts import render, redirect
 
 def index(request):
 
-    if request.META['HTTP_HOST'] == "mumbobot.xyz":
+    if request.META['HTTP_HOST'] == "agradehost.com":
         return render(request, "frontend/index.html")
     else:
         return redirect('https://agradehost.com')
 
 def commands(request):
 
-    if request.META['HTTP_HOST'] == "mumbobot.xyz":
+    if request.META['HTTP_HOST'] == "agradehost.com":
         return render(request, "frontend/commands.html")
     else:
         return redirect('https://agradehost.com')
 
 def tos(request):
 
-    if request.META['HTTP_HOST'] == "mumbobot.xyz":
+    if request.META['HTTP_HOST'] == "agradehost.com":
         return render(request, "frontend/tos.html")
     else:
         return redirect('https://agradehost.com')
 
 def privacy(request):
 
-    if request.META['HTTP_HOST'] == "mumbobot.xyz":
+    if request.META['HTTP_HOST'] == "agradehost.com":
         return render(request, "frontend/privacy.html")
     else:
         return redirect('https://agradehost.com')
 
 def changelog(request):
 
-    if request.META['HTTP_HOST'] == "mumbobot.xyz":
+    if request.META['HTTP_HOST'] == "agradehost.com":
         return render(request, "frontend/changelog.html")
     else:
         return redirect('https://agradehost.com')
 
 def migration(request):
 
-    if request.META['HTTP_HOST'] == "mumbobot.xyz":
+    if request.META['HTTP_HOST'] == "agradehost.com":
         return render(request, "frontend/migration.html")
     else:
         return redirect('https://agradehost.com')
 
 def start(request):
-    if request.META['HTTP_HOST'] == "mumbobot.xyz":
+    if request.META['HTTP_HOST'] == "agradehost.com":
         return render(request, "frontend/start.html")
     else:
         return redirect('https://agradehost.com')

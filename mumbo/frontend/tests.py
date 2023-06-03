@@ -15,55 +15,55 @@ class FrontEndTestCase(TestCase):
         pass
 
     def test_home_badhost(self):
-        response = self.client.get('/', HTTP_HOST="api.mumbobot.xyz")
+        response = self.client.get('/', HTTP_HOST="api.agradehost.com")
         self.assertEqual(response.status_code, 302)
 
     def test_migration_badhost(self):
-        response = self.client.get('/migration/', HTTP_HOST="api.mumbobot.xyz")
+        response = self.client.get('/migration/', HTTP_HOST="api.agradehost.com")
         self.assertEqual(response.status_code, 302)
 
     def test_commands_badhost(self):
-        response = self.client.get('/commands/', HTTP_HOST="api.mumbobot.xyz")
+        response = self.client.get('/commands/', HTTP_HOST="api.agradehost.com")
         self.assertEqual(response.status_code, 302)
 
     def test_changelog_badhost(self):
-        response = self.client.get('/changelog/', HTTP_HOST="api.mumbobot.xyz")
+        response = self.client.get('/changelog/', HTTP_HOST="api.agradehost.com")
         self.assertEqual(response.status_code, 302)
 
     def test_privacy_badhost(self):
-        response = self.client.get('/privacy/', HTTP_HOST="api.mumbobot.xyz")
+        response = self.client.get('/privacy/', HTTP_HOST="api.agradehost.com")
         self.assertEqual(response.status_code, 302)
 
     def test_tos_badhost(self):
-        response = self.client.get('/tos/', HTTP_HOST="api.mumbobot.xyz")
+        response = self.client.get('/tos/', HTTP_HOST="api.agradehost.com")
         self.assertEqual(response.status_code, 302)
 
     def test_start_badhost(self):
-        response = self.client.get('/getting-started/', HTTP_HOST="api.mumbobot.xyz")
+        response = self.client.get('/getting-started/', HTTP_HOST="api.agradehost.com")
         self.assertEqual(response.status_code, 302)
 
     def test_home(self):
-        response = self.client.get('/', HTTP_HOST="mumbobot.xyz")
+        response = self.client.get('/', HTTP_HOST="agradehost.com")
         self.assertEqual(response.status_code, 200)
 
     def test_migration(self):
-        response = self.client.get('/migration/', HTTP_HOST="mumbobot.xyz")
+        response = self.client.get('/migration/', HTTP_HOST="agradehost.com")
         self.assertEqual(response.status_code, 200)
 
     def test_commands(self):
-        response = self.client.get('/commands/', HTTP_HOST="mumbobot.xyz")
+        response = self.client.get('/commands/', HTTP_HOST="agradehost.com")
         self.assertEqual(response.status_code, 200)
 
     def test_changelog(self):
-        response = self.client.get('/changelog/', HTTP_HOST="mumbobot.xyz")
+        response = self.client.get('/changelog/', HTTP_HOST="agradehost.com")
         self.assertEqual(response.status_code, 200)
 
     def test_privacy(self):
-        response = self.client.get('/privacy/', HTTP_HOST="mumbobot.xyz")
+        response = self.client.get('/privacy/', HTTP_HOST="agradehost.com")
         self.assertEqual(response.status_code, 200)
 
     def test_tos(self):
-        response = self.client.get('/tos/', HTTP_HOST="mumbobot.xyz")
+        response = self.client.get('/tos/', HTTP_HOST="agradehost.com")
         self.assertEqual(response.status_code, 200)
 
     def test_invite(self):
@@ -71,5 +71,5 @@ class FrontEndTestCase(TestCase):
         self.assertEqual(response.status_code, 302)
 
     def test_start(self):
-        response = self.client.get('/getting-started/', HTTP_HOST="mumbobot.xyz")
+        response = self.client.get('/getting-started/', HTTP_HOST="agradehost.com")
         self.assertEqual(response.status_code, 200)

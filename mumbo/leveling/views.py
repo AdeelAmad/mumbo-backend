@@ -22,7 +22,8 @@ def index(request):
         username = decoded_credentials[0]
         password = decoded_credentials[1]
     except:
-        return redirect('https://mumbobot.xyz')
+        return redirect('https://agradehost.com')
+
     if username == "bot" and password == "%a_938xZeT_VcY8J7uN7GGHnw4auuvVQ":
         # GET to retrieve data
         if request.method == "GET":
@@ -70,7 +71,7 @@ def index(request):
         else:
             return HttpResponse(status=405)
     else:
-        return redirect('https://mumbobot.xyz')
+        return redirect('https://agradehost.com')
 
 @csrf_exempt
 def pain(request):
@@ -81,7 +82,7 @@ def pain(request):
         username = decoded_credentials[0]
         password = decoded_credentials[1]
     except:
-        return redirect('https://mumbobot.xyz')
+        return redirect('https://agradehost.com')
     if username == "bot" and password == "%a_938xZeT_VcY8J7uN7GGHnw4auuvVQ":
 
 
@@ -154,7 +155,7 @@ def pain(request):
         else:
             return HttpResponse(status=405)
     else:
-        return redirect('https://mumbobot.xyz')
+        return redirect('https://agradehost.com')
 
 def leaderboard(request):
     try:
@@ -164,7 +165,7 @@ def leaderboard(request):
         username = decoded_credentials[0]
         password = decoded_credentials[1]
     except:
-        return redirect('https://mumbobot.xyz')
+        return redirect('https://agradehost.com')
     if username == "bot" and password == "%a_938xZeT_VcY8J7uN7GGHnw4auuvVQ":
         # GET to retrieve data
         if request.method == "GET":
@@ -182,7 +183,7 @@ def leaderboard(request):
         else:
             return HttpResponse(status=405)
     else:
-        return redirect('https://mumbobot.xyz')
+        return redirect('https://agradehost.com')
 
 @csrf_exempt
 def pain2(request):
@@ -193,7 +194,7 @@ def pain2(request):
         username = decoded_credentials[0]
         password = decoded_credentials[1]
     except:
-        return redirect('https://mumbobot.xyz')
+        return redirect('https://agradehost.com')
     if username == "bot" and password == "%a_938xZeT_VcY8J7uN7GGHnw4auuvVQ":
 
 
@@ -247,4 +248,4 @@ def pain2(request):
                 return HttpResponse(status=404)
 
     else:
-        return redirect('https://mumbobot.xyz')
+        return redirect('https://agradehost.com')

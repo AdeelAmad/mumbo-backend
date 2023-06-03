@@ -20,7 +20,7 @@ def index(request):
         username = decoded_credentials[0]
         password = decoded_credentials[1]
     except:
-        return redirect('https://mumbobot.xyz')
+        return redirect('https://agradehost.com')
 
     if username == "bot" and password == "%a_938xZeT_VcY8J7uN7GGHnw4auuvVQ":
         # GET to retrieve data
@@ -102,4 +102,4 @@ def index(request):
         else:
             return HttpResponse(status=405)
     else:
-        return redirect('https://mumbobot.xyz')
+        return redirect('https://agradehost.com')

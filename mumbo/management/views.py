@@ -43,7 +43,7 @@ def index(request):
         username = decoded_credentials[0]
         password = decoded_credentials[1]
     except:
-        return redirect('https://mumbobot.xyz')
+        return redirect('https://agradehost.com')
 
     if username == "bot" and password == "%a_938xZeT_VcY8J7uN7GGHnw4auuvVQ":
         # GET to retrieve data
@@ -60,6 +60,7 @@ def index(request):
                         "voicechannel": g.voicechannel,
                         "leveling": g.leveling,
                         "afkmusic": g.afkmusic,
+                        "waifu": g.waifu,
                         "alert": g.alert
                     }
 
@@ -105,6 +106,7 @@ def index(request):
                     g.voicechannel = body['voicechannel']
                     g.leveling = body['leveling']
                     g.afkmusic = body['afkmusic']
+                    g.waifu = body['waifu']
                     g.alert = body['alert']
                     g.save()
                     response = {
@@ -113,6 +115,7 @@ def index(request):
                         "voicechannel": g.voicechannel,
                         "leveling": g.leveling,
                         "afkmusic": g.afkmusic,
+                        "waifu": g.waifu,
                         "alert": g.alert
                     }
                     return JsonResponse(data=response, status=200)
@@ -124,7 +127,7 @@ def index(request):
         else:
             return HttpResponse(status=405)
     else:
-        return redirect('https://mumbobot.xyz')
+        return redirect('https://agradehost.com')
 
 def migrate(request):
     try:
@@ -134,7 +137,7 @@ def migrate(request):
         username = decoded_credentials[0]
         password = decoded_credentials[1]
     except:
-        return redirect('https://mumbobot.xyz')
+        return redirect('https://agradehost.com')
 
     if username == "bot" and password == "%a_938xZeT_VcY8J7uN7GGHnw4auuvVQ":
         # GET to retrieve data
@@ -244,4 +247,4 @@ def migrate(request):
         else:
             return HttpResponse(status=405)
     else:
-        return redirect('https://mumbobot.xyz')
+        return redirect('https://agradehost.com')

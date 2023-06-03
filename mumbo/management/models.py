@@ -7,5 +7,6 @@ class Guild(models.Model):
     voicechannel = models.BooleanField(default=False)
     leveling = models.BooleanField(default=False)
     afkmusic = models.BooleanField(default=False)
+    waifu = models.BooleanField(default=False)
     alert = models.BooleanField(default=True)
     migrated = models.BooleanField(default=False)

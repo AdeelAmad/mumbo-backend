@@ -40,10 +40,18 @@ SECRET_KEY = 'django-insecure-b15kcwby9&v$n(*fwfoe6e*)five#wm)ev5hqe6=1kot_@my!2
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['mumbobot.xyz', 'api.mumbobot.xyz', '66.94.113.9', '127.0.0.1', 'localhost']
+ALLOWED_HOSTS = ['agradehost.com', 'api.agradehost.com', '66.94.113.9', '127.0.0.1', 'localhost']
 
 
 # Application definition
+AUTHENTICATION_BACKENDS = [
+    # Needed to login by username in Django admin, regardless of `allauth`
+    'django.contrib.auth.backends.ModelBackend',
+
+    # `allauth` specific authentication methods, such as login by e-mail
+    'allauth.account.auth_backends.AuthenticationBackend',
+]
+
 
 INSTALLED_APPS = [
     'management.apps.ManagementConfig',
@@ -58,6 +66,11 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.sites',
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    'allauth.socialaccount.providers.discord'
 ]
 
 MIDDLEWARE = [
@@ -83,6 +96,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'django.template.context_processors.request'
             ],
         },
     },
@@ -122,8 +136,21 @@ AUTH_PASSWORD_VALIDATORS = [
     },
     {
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
-    },
+    }
 ]
+
+SITE_ID = 1
+
+# Provider specific settings
+SOCIALACCOUNT_PROVIDERS = {
+    'discord': {
+        'APP': {
+            'client_id': '744992005158862939',
+            'secret': 'kwD6dCRjnHlFvECXpGRVuGQ7vADvS39m',
+            'key': '0312e8c0fc05d1e7663bc302e0b0444a5b0ea7ba329fcda65a486886fe1c06d6'
+        }
+    }
+}
 
 
 # Internationalization

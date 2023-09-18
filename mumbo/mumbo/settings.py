@@ -14,19 +14,6 @@ from pathlib import Path
 import sentry_sdk
 from sentry_sdk.integrations.django import DjangoIntegration
 
-sentry_sdk.init(
-    dsn="https://4a29d0a6fe4f4b36aca1b3ffa27a7ee0@o1237600.ingest.sentry.io/6387974",
-    integrations=[DjangoIntegration()],
-
-    # Set traces_sample_rate to 1.0 to capture 100%
-    # of transactions for performance monitoring.
-    # We recommend adjusting this value in production.
-    traces_sample_rate=1.0,
-
-    # If you wish to associate users to errors (assuming you are using
-    # django.contrib.auth) you may enable sending PII data.
-    send_default_pii=True
-)
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -35,7 +22,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-b15kcwby9&v$n(*fwfoe6e*)five#wm)ev5hqe6=1kot_@my!2'
+SECRET_KEY = ''
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -111,12 +98,7 @@ WSGI_APPLICATION = 'mumbo.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 's2_Django_API',
-        'USER': 'u2_L5TN4A5xMr',
-        'PASSWORD': '1d!q=jX^pGpji.CG!3FW9brD',
-        'HOST': '66.94.113.9',
-        'PORT': '10002',
+        
     }
 }
 
@@ -145,9 +127,9 @@ SITE_ID = 1
 SOCIALACCOUNT_PROVIDERS = {
     'discord': {
         'APP': {
-            'client_id': '744992005158862939',
-            'secret': 'kwD6dCRjnHlFvECXpGRVuGQ7vADvS39m',
-            'key': '0312e8c0fc05d1e7663bc302e0b0444a5b0ea7ba329fcda65a486886fe1c06d6'
+            'client_id': '',
+            'secret': '',
+            'key': ''
         }
     }
 }

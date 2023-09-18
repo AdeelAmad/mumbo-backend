@@ -16,9 +16,9 @@ from voicechannels.models import voicechannelsetting
 
 def init_db():
     return mysql.connector.connect(
-        user="u2_Ru8Tw52hz5",
-        password="bLyEEg!Mw^!GOOAzyUXMb^XZ",
-        host="66.94.113.9",
+        user="",
+        password="",
+        host="",
         port=10002,
         database="s2_Data"
     )
